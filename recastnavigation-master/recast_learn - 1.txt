@@ -1,0 +1,70 @@
+﻿top
+recastnav unity unreal的寻路系统。
+看别人写的代码，真的是非常非常的注释明白。
+那个字段干啥的，有什么坑，注意什么都有。
+看了会明白这到底是做什么的，如果这都维护不好，
+还写什么代码。
+
+1:SampleTool
+	virtual void init(class Sample* sample) = 0;
+	virtual void reset() = 0;
+	virtual void handleMenu() = 0;
+	virtual void handleClick(const float* s,const float* p,bool shift) = 0;
+	virtual void handleRender() = 0;
+	virtual void handleRenderOverlay(double* proj, double* model, int* view) = 0;
+	virtual void handleToggle() = 0;
+	virtual void handleStep() = 0;
+	virtual void handleUpdate(const float dt) = 0;
+
+2:SampleToolState
+	virtual ~SampleToolState() {}
+	virtual void init(class Sample* sample) = 0;
+	virtual void reset() = 0;
+	virtual void handleRender() = 0;
+	virtual void handleRenderOverlay(double* proj,double* model,int* view) = 0;
+	virtual void handleUpdate(const float dt) = 0;
+	
+3：Sample
+	class InputGeom* m_geom;
+	class dtNavMesh* m_navMesh;
+	class dtnavMeshQuery* m_navQuery;
+	class dtCrowd* m_crowd;
+	unsigned char m_navMeshDrawFlags;
+	float m_cellSize;
+	float m_cellHeight;
+	float m_agentHeight;
+	float m_agentRadius;
+	float m_agentMaxClimb;
+	float m_agentMaxSlope;
+	float m_regionMinSize;
+	float m_regionMergeSize;
+	float m_edgeMaxLen;
+	float m_edgeMaxErr;
+	float m_vertsPerPoly;
+	float m_detailSampleDist;
+	float m_detailSampleMaxError;
+	int m_partitionType;
+	
+	bool m_filterLowHangingObstacles;
+	bool m_filterLedgeSpans;
+	bool m_filterWalkableLowHeightSpans;
+	
+	SampleTool* m_tool;
+	SampleToolState* m_toolStates[MAX_TOOLS];
+	
+	BuildContext* m_ctx;
+	SampleDebugDraw m_dd;
+	
+3: Sample_SoloMesh
+    heightfield  
+	   主要是进行体素化和设置下areatype，  
+	compact heightfield 
+		过滤出可行走空间，再把空间根据类型 
+		高度一些参数进行进行邻居的连接形成region
+
+	Step 1. Initialize build config.
+		rcConfig 设置值
+	Step 2. Rasterize input polygon soup.
+		width,height,bmin,bmax,cs,ch 这几个参数生成heightfield
+		
+	

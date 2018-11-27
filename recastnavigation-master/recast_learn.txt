@@ -1,0 +1,144 @@
+﻿1: recast
+ rcSpan   			
+	Represents a span in a heightfield.
+
+ rcSpanPool			
+	A memory pool used for quick allocation of spans within a heightfield. 
+
+ rcHeightfield			
+	A dynamic heightfield representing obstructed space.
+
+ rcCompactCell 			
+	Provides information on the content of a cell column in a compact heightfield. 
+
+ rcCompactSpan			
+	Represents a span of unobstructed space within a compact heightfield.
+
+ rcCompactHeightfield		
+	A compact, static heightfield representing unobstructed space.
+
+ rcHeightfieldLayer		
+	Represents a heightfield layer within a layer set.
+
+ rcHeightfieldLayerSet 		
+	Represents a set of heightfield layers.
+
+ rcContour 			
+   	Represents a simple, non-overlapping contour in field space.
+
+ rcContourSet			
+    	Represents a group of related contours.
+
+ rcPolyMesh 			
+    	Represents a polygon mesh suitable for use in building a navigation mesh. 
+
+ rcPolyMeshDetail
+	Contains triangle meshes that represent detailed height data associated
+	with the polygons in its associated polygon mesh object.
+
+
+2:detour navmesh
+ dtPoly
+	Defines a polygon within a dtMeshTile object.
+ dtPolyDetail
+	Defines the location of detail sub-mesh data within a dtMeshTile.
+ dtLink
+	Defines a link between polygons.
+ dtBVNode
+	Bounding volume node.
+ dtOffMeshConnection
+	Defines an navigation mesh off-mesh connection within a dtMeshTile object.
+	An off-mesh connection is a user defined traversable connection made up to two vertices.
+ dtMeshHeader
+	Provides high level information related to a dtMeshTile object.
+
+ dtMeshTile
+	Defines a navigation mesh tile.
+ dtNavMeshParams
+	Configuration parameters used to define multi-tile navigation meshes.
+	The values are used to allocate space during the initialization of a navigation mesh.
+ dtNavMesh
+	A navigation mesh based on tiles of convex polygons.
+
+3: detour navmesh builder
+ dtNavMeshCreateParams
+	Represents the source data used to build an navigation mesh tile.
+
+	/// @name Polygon Mesh Attributes
+	
+  	/// Used to create the base navigation graph.
+ 
+ 	/// See #rcPolyMesh for details related to these attributes.
+	
+	
+	/// @name Height Detail Attributes (Optional)
+	
+	/// See #rcPolyMeshDetail for details related to these attributes.
+
+	/// @name Off-Mesh Connections Attributes (Optional)
+	
+	/// Used to define a custom point-to-point edge within the navigation graph, an 
+	
+	/// off-mesh connection is a user defined traversable connection made up to two vertices, 
+	
+	/// at least one of which resides within a navigation mesh polygon.
+
+	/// @name Tile Attributes
+	
+	/// @note The tile grid/layer data can be left at zero if the destination is a single tile mesh.
+	
+	
+	/// @name General Configuration Attributes
+
+	/// True if a bounding volume tree should be built for the tile.
+	
+	/// @note The BVTree is not normally needed for layered navigation meshes.
+
+4: detour navmesh query
+ dtQueryFilter
+	Defines polygon filtering and traversal costs for navigation mesh query operations.
+ dtRaycastHit
+	Provides information about raycast hit 
+	filled by dtNavMeshQuery::raycast
+ dtPolyQuery
+	Provides custom polygon query behavior.
+	Used by dtNavMeshQuery::queryPolygons.
+ dtNavMeshQuery
+	Provides the ability to perform pathfinding related queries against a navigation mesh.
+
+5: detour navmesh node
+ dtNode
+ dtNodePool
+ dtNodeQueue
+
+6: detour path queue
+ dtPathQueue
+
+7: detour path corridor
+ dtPathCorridor 
+	Represents a dynamic polygon corridor used to plan agent movement.
+	
+8: Sample
+	// 模型原始数据
+    class InputGeom* m_geom;
+	// navmesh数据
+	class dtNavMesh* m_navMesh;
+	// navmesh 查询数据
+	class dtNavMeshQuery* m_navQuery;
+	// 管理移动agent
+	class dtCrowd* m_crowd;
+	
+9: SampleTool
+	virtual ~SampleTool(){}
+	virtual int type() = 0;
+	virtual void init(class Sample* sample) = 0;
+	virtual void reset() = 0;
+	virtual void handleMenu() = 0;
+	virtual void handleClick(const float* s,const float* p,bool shift) = 0;
+	virtual void handleRender() = 0;
+	virtual void handleRenderOverlay(double* proj,double* module,int* view) = 0;
+	virtual void handleToggle() = 0;
+	virtual void handleStep() = 0;
+	virtual void handleUpdate(const float dt) = 0;
+	
+ 
